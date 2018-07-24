@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recipe_text_lr_margin">12dp</dimen>
+    <dimen name="recipe_text_tb_margin">6dp</dimen>
+    <dimen name="detail_margin">8dp</dimen>
+    <dimen name="ingredient_text_margin">2dp</dimen>
+    <dimen name="servering_padding">4dp</dimen>
+    <dimen name="card_padding">4dp</dimen>
+    <dimen name="chevron_lr_padding">40dp</dimen>
+    <dimen name="chevron_tb_padding">4dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+</resources>

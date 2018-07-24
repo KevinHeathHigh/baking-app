@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ingredients" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_detail_ingredient_recycler"
+        android:name="net.hobbitsoft.bakingapp.fragments.RecipeDetailIngredientsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/detail_margin"
+        android:layout_marginRight="@dimen/detail_margin"
+        tools:listitem="@layout/fragment_recipe_detail_ingredients" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instructions" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_detail_steps_recycler"
+        android:name="net.hobbitsoft.bakingapp.fragments.RecipeDetailStepsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/detail_margin"
+        android:layout_marginRight="@dimen/detail_margin"
+        tools:listitem="@layout/fragment_recipe_detail_ingredients" />
+</LinearLayout>

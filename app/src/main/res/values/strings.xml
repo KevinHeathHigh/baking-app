@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Baking Time</string>
+    <string name="servings">Servings:</string>
+    <string name="next_step">Next Step</string>
+    <string name="previous_step">Previous Step</string>
+
+    <!-- error strings -->
+    <string name="er_no_recipe_found">No Recipe Found</string>
+    <string name="er_no_steps_found">No Steps Found</string>
+    <string name="er_no_intent_found">No Intent Found</string>
+
+    <!-- sample strings -->
+    <string name="sample_serving_size">8</string>
+    <string name="sample_quantity">6</string>
+    <string name="sample_measure">TBLSP</string>
+    <string name="sample_ingredient">unsalted butter, melted</string>
+    <string name="sample_short_description">Recipe Introduction</string>
+
+
+</resources>
