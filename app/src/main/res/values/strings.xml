@@ -15,6 +15,8 @@
     <string name="sample_measure">TBLSP</string>
     <string name="sample_ingredient">unsalted butter, melted</string>
     <string name="sample_short_description">Recipe Introduction</string>
+    <string name="title_recipestep_list">RecipeSteps</string>
+    <string name="title_recipestep_detail">RecipeStep Detail</string>
 
 
 </resources>

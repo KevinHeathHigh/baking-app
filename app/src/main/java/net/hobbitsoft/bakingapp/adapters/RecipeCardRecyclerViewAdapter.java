@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.hobbitsoft.bakingapp.R;
-import net.hobbitsoft.bakingapp.RecipeDetailActivity;
+import net.hobbitsoft.bakingapp.RecipeStepDetailActivity;
 import net.hobbitsoft.bakingapp.recipes.Recipe;
 
 import java.util.List;
@@ -52,7 +52,8 @@ public class RecipeCardRecyclerViewAdapter extends RecyclerView.Adapter<RecipeCa
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), recipe.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, RecipeDetailActivity.class);
+                Intent intent = new Intent(mContext, RecipeStepDetailActivity.class);
+                // Intent intent = new Intent(mContext, RecipeDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(RECIPE, recipe);
                 intent.putExtra(RECIPE_BUNDLE, bundle);
