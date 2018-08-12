@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.hobbitsoft.bakingapp.adapters.RecipeCardRecyclerViewAdapter;
-import net.hobbitsoft.bakingapp.recipes.ParseRecipies;
+import net.hobbitsoft.bakingapp.recipes.ParseRecipes;
 import net.hobbitsoft.bakingapp.recipes.Recipe;
 
 import java.io.IOException;
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             } finally {
                 httpsURLConnection.disconnect();
             }
-            return ParseRecipies.parseRecipies(recipeJSON);
+            return ParseRecipes.parseRecipies(recipeJSON);
 
         }
 

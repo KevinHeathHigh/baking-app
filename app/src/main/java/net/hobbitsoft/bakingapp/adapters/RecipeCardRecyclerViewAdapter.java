@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import net.hobbitsoft.bakingapp.R;
-import net.hobbitsoft.bakingapp.RecipeStepDetailActivity;
+import net.hobbitsoft.bakingapp.RecipeDetailActivity;
 import net.hobbitsoft.bakingapp.recipes.Recipe;
 
 import java.util.List;
@@ -47,12 +49,17 @@ public class RecipeCardRecyclerViewAdapter extends RecyclerView.Adapter<RecipeCa
         if (mRecipesList != null) {
             holder.recipeName.setText(recipe.getName());
             holder.servingSize.setText(String.valueOf(recipe.getServings()));
+            if (!recipe.getImage().isEmpty()) {
+                Picasso.get()
+                        .load(recipe.getImage())
+                        .error(R.drawable.ic_menu_black_24dp)
+                        .into(holder.recipeImage);
+            }
         }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), recipe.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, RecipeStepDetailActivity.class);
+                Intent intent = new Intent(mContext, RecipeDetailActivity.class);
                 // Intent intent = new Intent(mContext, RecipeDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(RECIPE, recipe);
@@ -72,12 +79,14 @@ public class RecipeCardRecyclerViewAdapter extends RecyclerView.Adapter<RecipeCa
         public final View mView;
         public final TextView recipeName;
         public final TextView servingSize;
+        public final ImageView recipeImage;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             recipeName = view.findViewById(R.id.recipe_name);
             servingSize = view.findViewById(R.id.recipe_serving_size);
+            recipeImage = view.findViewById(R.id.suggest_menu);
         }
 
     }

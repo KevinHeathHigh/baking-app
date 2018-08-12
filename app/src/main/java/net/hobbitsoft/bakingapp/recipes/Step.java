@@ -7,16 +7,16 @@ public class Step implements Serializable {
     private String shortDescription;
     private String description;
     private String videoURL;
-    private String thumbnailURIL;
+    private String thumbnailURL;
 
     public Step() {
     }
 
-    public Step(int id, String shortDescription, String videoURL, String thumbnailURIL) {
+    public Step(int id, String shortDescription, String videoURL, String thumbnailURL) {
         this.id = id;
         this.shortDescription = shortDescription;
         this.videoURL = videoURL;
-        this.thumbnailURIL = thumbnailURIL;
+        this.thumbnailURL = thumbnailURL;
     }
 
     public int getId() {
@@ -51,11 +51,11 @@ public class Step implements Serializable {
         this.videoURL = videoURL;
     }
 
-    public String getThumbnailURIL() {
-        return thumbnailURIL;
+    public String getThumbnailURL() {
+        return thumbnailURL;
     }
 
-    public void setThumbnailURIL(String thumbnailURIL) {
-        this.thumbnailURIL = thumbnailURIL;
+    public void setThumbnailURL(String thumbnailURL) {
+        this.thumbnailURL = thumbnailURL;
     }
 }

@@ -38,12 +38,14 @@ public class RecipeStepFragment extends Fragment {
     private static final String TAG = RecipeStepFragment.class.getSimpleName();
     private static final String STEP = "step";
     private static final String POSTION = "position";
+    private static final String PLAY_WHEN_READY = "play_when_ready";
 
     private static Step mStep;
 
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mExoPlayerView;
     private long mPosition;
+    private boolean mPlayWhenReady = true;
     private TextView description;
 
     public RecipeStepFragment() {
@@ -54,7 +56,7 @@ public class RecipeStepFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param Step mStep;
+     * @param Step step;
      * @return A new instance of fragment RecipeStepFragment.
      */
 
@@ -90,6 +92,8 @@ public class RecipeStepFragment extends Fragment {
 
         if (savedInstanceState != null) {
             mPosition = savedInstanceState.getLong(POSTION, C.POSITION_UNSET);
+            mPlayWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY);
+
         } else {
             mPosition = C.POSITION_UNSET;
         }
@@ -97,7 +101,12 @@ public class RecipeStepFragment extends Fragment {
         mExoPlayerView = stepView.findViewById(R.id.step_video_player);
 
         if (mStep.getVideoURL().isEmpty() || mStep.getVideoURL() == null) {
-            mExoPlayerView.setCustomErrorMessage("No Video Associated with thie Instruction");
+            if (mStep.getVideoURL().isEmpty() && !mStep.getThumbnailURL().isEmpty()
+                    && mStep.getThumbnailURL().endsWith(".mp4")) {
+                createPlayer();
+            } else {
+                mExoPlayerView.setCustomErrorMessage("No Video Associated with thie Instruction");
+            }
         } else {
             createPlayer();
         }
@@ -113,6 +122,7 @@ public class RecipeStepFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putLong(POSTION, mPosition);
+        outState.putBoolean(PLAY_WHEN_READY, mPlayWhenReady);
         super.onSaveInstanceState(outState);
     }
 
@@ -120,7 +130,6 @@ public class RecipeStepFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 
     @Override
     public void onStop() {
@@ -159,13 +168,20 @@ public class RecipeStepFragment extends Fragment {
         LoadControl loadControl = new DefaultLoadControl();
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
         mExoPlayerView.setPlayer(mExoPlayer);
-        Uri videoUri = Uri.parse(mStep.getVideoURL()).buildUpon().build();
+        String videoURL;
+        if (mStep.getVideoURL().isEmpty() && !mStep.getThumbnailURL().isEmpty()
+                && mStep.getThumbnailURL().endsWith(".mp4")) {
+            videoURL = mStep.getThumbnailURL();
+        } else {
+            videoURL = mStep.getVideoURL();
+        }
+        Uri videoUri = Uri.parse(videoURL).buildUpon().build();
         String userAgent = Util.getUserAgent(getContext(), "BakingApp");
         MediaSource mediaSource = new ExtractorMediaSource(videoUri,
                 new DefaultDataSourceFactory(getContext(), userAgent),
                 new DefaultExtractorsFactory(), null, null);
         mExoPlayer.prepare(mediaSource);
-        mExoPlayer.setPlayWhenReady(true);
+        mExoPlayer.setPlayWhenReady(mPlayWhenReady);
     }
 
     private void destroyPlayer() {

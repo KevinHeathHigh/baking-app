@@ -23,6 +23,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private static final String RECIPE = "recipe";
 
+    private boolean mTwoPane = false;
+
     private Recipe mRecipe;
     private List<Ingredient> mIngredientList = null;
     private List<Step> mStepList = null;
@@ -38,7 +40,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail);
+        setContentView(R.layout.activity_recipe_detail_master);
 
         final Intent intent = getIntent();
 
@@ -47,9 +49,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             finish();
         }
 
+        mTwoPane = findViewById(R.id.recipestep_detail_container) != null;
+
         if (savedInstanceState == null) {
-            Bundle recipeBundle = intent.getBundleExtra(RecipeCardRecyclerViewAdapter.RECIPE_BUNDLE);
+            Bundle recipeBundle =
+                    intent.getBundleExtra(RecipeCardRecyclerViewAdapter.RECIPE_BUNDLE);
             mRecipe = (Recipe) recipeBundle.getSerializable(RecipeCardRecyclerViewAdapter.RECIPE);
+
         } else {
             mRecipe = (Recipe) savedInstanceState.getSerializable(RECIPE);
         }
@@ -71,13 +77,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             mRecipeIngredientList.setAdapter(mRecipeDetailIngredientRecyclerViewAdapter);
 
             mRecipeDetailStepRecyclerViewAdapter =
-                    new RecipeDetailStepRecyclerViewAdapter(this, mStepList, mRecipe.getName());
+                    new RecipeDetailStepRecyclerViewAdapter(this, mStepList, mRecipe.getName()
+                            , mTwoPane, this);
             mRecipeStepList.setAdapter(mRecipeDetailStepRecyclerViewAdapter);
         } else {
             Log.d(TAG, getResources().getString(R.string.er_no_recipe_found));
             finish();
         }
-
     }
 
     @Override

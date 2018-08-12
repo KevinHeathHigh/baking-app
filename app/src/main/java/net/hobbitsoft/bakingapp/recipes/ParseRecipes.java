@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ParseRecipies {
+public class ParseRecipes {
 
-    private static final String TAG = ParseRecipies.class.getSimpleName();
+    private static final String TAG = ParseRecipes.class.getSimpleName();
 
     private static final String ID = "id";
     private static final String NAME = "name";
@@ -65,7 +65,7 @@ public class ParseRecipies {
 
     }
 
-    private static Ingredient parseIngredient(String ingredientJSON) {
+    public static Ingredient parseIngredient(String ingredientJSON) {
         Ingredient ingredient = new Ingredient();
 
         try {
@@ -92,7 +92,7 @@ public class ParseRecipies {
             step.setShortDescription(jsonObject.optString(SHORT_DESCRIPTION));
             step.setDescription(jsonObject.optString(DESCRIPTION));
             step.setVideoURL(jsonObject.optString(VIDEO_URL));
-            step.setThumbnailURIL(jsonObject.optString(THUMBNAIL_URL));
+            step.setThumbnailURL(jsonObject.optString(THUMBNAIL_URL));
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();

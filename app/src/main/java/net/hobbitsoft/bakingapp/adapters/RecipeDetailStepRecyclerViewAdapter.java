@@ -7,9 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.hobbitsoft.bakingapp.R;
+import net.hobbitsoft.bakingapp.RecipeDetailActivity;
 import net.hobbitsoft.bakingapp.StepActivity;
 import net.hobbitsoft.bakingapp.recipes.Step;
 
@@ -32,11 +36,17 @@ public class RecipeDetailStepRecyclerViewAdapter extends RecyclerView.Adapter<Re
     private final List<Step> mStepList;
     private final Context mContext;
     private String mRecipeName;
+    private boolean mTwoPane;
 
-    public RecipeDetailStepRecyclerViewAdapter(Context context, List<Step> steps, String recipeName) {
+    private final RecipeDetailActivity mParent;
+
+    public RecipeDetailStepRecyclerViewAdapter(Context context, List<Step> steps, String recipeName,
+                                               boolean twoPane, RecipeDetailActivity parent) {
         mContext = context;
         mStepList = steps;
         mRecipeName = recipeName;
+        mTwoPane = twoPane;
+        mParent = parent;
     }
 
     @Override
@@ -53,17 +63,32 @@ public class RecipeDetailStepRecyclerViewAdapter extends RecyclerView.Adapter<Re
 
         holder.step = mStepList.get(position);
         holder.mShortDescription.setText(holder.step.getShortDescription());
+        if (!holder.step.getThumbnailURL().isEmpty() && !holder.step.getThumbnailURL().endsWith(".mp4")) {
+            Picasso.get()
+                    .load(holder.step.getThumbnailURL())
+                    .error(R.drawable.ic_menu_black_24dp)
+                    .into(holder.mStepThumb);
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, StepActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(STEP_LIST, (Serializable) stepList);
-                intent.putExtra(STEP_BUNDLE, bundle);
-                intent.putExtra(RECIPE_NAME, mRecipeName);
-                intent.putExtra(CURRENT_STEP, currentStep);
-                mContext.startActivity(intent);
+                if (mTwoPane) {
+                    Bundle bundle = new Bundle();
+                    RecipeStepFragment fragment = new RecipeStepFragment();
+                    fragment.setStep(mStepList.get(currentStep));
+                    mParent.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.recipestep_detail_container, fragment)
+                            .commit();
+                } else {
+                    Intent intent = new Intent(mContext, StepActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(STEP_LIST, (Serializable) stepList);
+                    intent.putExtra(STEP_BUNDLE, bundle);
+                    intent.putExtra(RECIPE_NAME, mRecipeName);
+                    intent.putExtra(CURRENT_STEP, currentStep);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }
@@ -77,12 +102,14 @@ public class RecipeDetailStepRecyclerViewAdapter extends RecyclerView.Adapter<Re
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mShortDescription;
+        public final ImageView mStepThumb;
         public Step step;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mShortDescription = view.findViewById(R.id.step_short_description);
+            mStepThumb = view.findViewById(R.id.step_suggest_menu);
         }
     }
 }

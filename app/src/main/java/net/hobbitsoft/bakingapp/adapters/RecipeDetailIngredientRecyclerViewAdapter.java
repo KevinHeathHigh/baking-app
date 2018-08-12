@@ -2,7 +2,6 @@ package net.hobbitsoft.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ public class RecipeDetailIngredientRecyclerViewAdapter extends RecyclerView.Adap
     private final Context mContext;
 
     public RecipeDetailIngredientRecyclerViewAdapter(Context context, List<Ingredient> ingredients) {
-        Log.d(TAG, "CONSTRUCTOR");
         mContext = context;
         mIngredientList = ingredients;
     }

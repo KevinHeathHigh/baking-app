@@ -25,7 +25,7 @@
             tools:text="@tools:sample/lorem" />
 
         <ImageView
-            android:id="@+id/suggest_menu"
+            android:id="@+id/step_suggest_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/recipe_text_lr_margin"

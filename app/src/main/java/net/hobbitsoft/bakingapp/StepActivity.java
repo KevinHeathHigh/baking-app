@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import net.hobbitsoft.bakingapp.adapters.RecipeDetailStepRecyclerViewAdapter;
 import net.hobbitsoft.bakingapp.adapters.RecipeStepFragment;
@@ -50,6 +51,7 @@ public class StepActivity extends AppCompatActivity {
             mRecipeName = intent.getStringExtra(RecipeDetailStepRecyclerViewAdapter.RECIPE_NAME);
             mCurrentStep = intent.getIntExtra(RecipeDetailStepRecyclerViewAdapter.CURRENT_STEP, 0);
             recipeStepFragment = RecipeStepFragment.newInstance(mStepList.get(mCurrentStep));
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.step_fragment_container, recipeStepFragment, FRAGEMENT_TAG)
                     .commit();
@@ -67,6 +69,10 @@ public class StepActivity extends AppCompatActivity {
             mTotalSteps = mStepList.size();
             final List<Step> stepList = mStepList;
 
+            if (findViewById(R.id.step_short_description) != null) {
+                TextView shortDesc = findViewById(R.id.step_short_description);
+                shortDesc.setText(mStepList.get(mCurrentStep).getShortDescription());
+            }
 
             final ImageView nextStepView = findViewById(R.id.next_step);
             final ImageView previousStepView = findViewById(R.id.previous_step);
@@ -90,6 +96,10 @@ public class StepActivity extends AppCompatActivity {
                             previousStepView.setVisibility(View.INVISIBLE);
                         if (nextStepView.getVisibility() == View.INVISIBLE)
                             nextStepView.setVisibility(View.VISIBLE);
+                        if (findViewById(R.id.step_short_description) != null) {
+                            TextView shortDesc = findViewById(R.id.step_short_description);
+                            shortDesc.setText(mStepList.get(mCurrentStep).getShortDescription());
+                        }
                     }
                 });
             }
@@ -113,6 +123,10 @@ public class StepActivity extends AppCompatActivity {
                             nextStepView.setVisibility(View.INVISIBLE);
                         if (previousStepView.getVisibility() == View.INVISIBLE)
                             previousStepView.setVisibility(View.VISIBLE);
+                        if (findViewById(R.id.step_short_description) != null) {
+                            TextView shortDesc = findViewById(R.id.step_short_description);
+                            shortDesc.setText(mStepList.get(mCurrentStep).getShortDescription());
+                        }
                     }
                 });
             }
